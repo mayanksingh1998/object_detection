@@ -1,0 +1,57 @@
+From tensorflow/research folder run below code.
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+cd to the folder where this txt file is and run
+export PYTHONPATH=$PYTHONPATH:../../../TensorFlow/models/research/object_detection
+
+python train.py --logtostderr --train_dir=training/train --pipeline_config_path=training/faster_rcnn_inception_v2_coco.config
+first run training till specific step and then stop and run evaluation by below lines.
+python eval.py --logtostderr --pipeline_config_path=training/faster_rcnn_inception_v2_coco.config --checkpoint_dir=training/train --eval_dir=training/eval
+NOTE:-After running evalaluation edit the checkpoint file in training/train to train each specific checkpoint and monitor the process.
+For doing this just change the first line with respective checkpoint one by one in order
+For tensorboard run the following command from where this txt file is located
+tensorboard --logdir=./training
+To export inferenced graph do following set the desired model checkpoint in trained_checkpoint_prefix flag
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_coco.config --trained_checkpoint_prefix training/train/model.ckpt-11915 --output_directory trained-inference-graphs/output_inference_graph_v2
+
+
+
+
+
+
+
+
+
+data_augmentation_options {
+   
+    random_vertical_flip{
+    }
+}
+data_augmentation_options {
+    random_rotation90{
+    }
+}
+data_augmentation_options {
+    random_pixel_value_scale{
+    }
+}
+data_augmentation_options { 
+   random_image_scale{
+    }
+}
+data_augmentation_options {
+    random_rgb_to_gray{
+    }
+}
+data_augmentation_options { 
+   random_adjust_brightness{
+    }
+}
+data_augmentation_options {
+    random_adjust_contrast{
+    }
+}
+data_augmentation_options {
+    random_adjust_hue{
+    }
+}
+  
